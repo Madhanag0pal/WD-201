@@ -2,17 +2,13 @@ require "date"
 
 class Todo
   def initialize(text, due_date, completed)
-    @text = text
-    @date = due_date
-    @completed = completed
+    @text, @date, @completed = text, due_date, completed
   end
 
-  def to_s
-    to_displayable_string
-  end
-
+  #Converts todo to string
   def to_displayable_string
-    "[#{(@completed) ? "X" : " "}] #{@text}#{(@date != Date.today) ? " #{@date}" : ""}"
+    compleated, date = @completed ? "X" : " ", (@date != Date.today) ? " #{@date}" : ""
+    "#{[compleated]} #{@text} #{date}"
   end
 
   def overdue?
