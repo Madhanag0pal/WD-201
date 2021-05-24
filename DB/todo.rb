@@ -17,37 +17,37 @@ class Todo < ActiveRecord::Base
   end
 
   def self.overdue
-    Todo.where(due_date: ..Date.today - 1)
+    Todo.where("due_date < ?", Date.today)
   end
 
   def self.due_today
-    Todo.where(due_date: Date.today)
+    Todo.where("due_date = ?", Date.today)
   end
 
   def self.due_later
-    Todo.where(due_date: Date.today + 1..)
+    Todo.where("due_date > ?", Date.today)
   end
 
   def self.show_list
     puts "My Todo-list\n\n"
 
     puts "Overdue\n"
-    puts Todo.overdue.to_displayable_list
+    puts overdue.to_displayable_list
     puts "\n\n"
 
     puts "Due Today\n"
-    puts Todo.due_today.to_displayable_list
+    puts due_today.to_displayable_list
     puts "\n\n"
 
     puts "Due Later\n"
-    puts Todo.due_later.to_displayable_list
+    puts due_later.to_displayable_list
     puts "\n\n"
   end
 
   def self.mark_as_complete!(id)
-    todo = Todo.find(id)
+    todo = find(id)
     todo.completed = !todo.completed
-    todo.save
+    todo.save!
     todo
   end
 
