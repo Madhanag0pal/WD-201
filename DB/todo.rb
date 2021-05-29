@@ -13,19 +13,19 @@ class Todo < ActiveRecord::Base
   end
 
   def self.add_task(h)
-    Todo.create!(todo_text: h[:todo_text], due_date: Date.today + h[:due_in_days], completed: false)
+    create!(todo_text: h[:todo_text], due_date: Date.today + h[:due_in_days], completed: false)
   end
 
   def self.overdue
-    Todo.where("due_date < ?", Date.today)
+    where("due_date < ?", Date.today)
   end
 
   def self.due_today
-    Todo.where("due_date = ?", Date.today)
+    where("due_date = ?", Date.today)
   end
 
   def self.due_later
-    Todo.where("due_date > ?", Date.today)
+    where("due_date > ?", Date.today)
   end
 
   def self.show_list
